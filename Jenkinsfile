@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        TF_WORKING_DIR = "." 
+        TF_WORKING_DIR = "day1"
     }
 
     stages {
@@ -18,12 +18,12 @@ pipeline {
                 withCredentials([
                     string(credentialsId: 'aws_access_key', variable: 'AWS_ACCESS_KEY_ID'),
                     string(credentialsId: 'secret', variable: 'AWS_SECRET_ACCESS_KEY'),
-                    string(credentialsId: 'session_token', variable: 'AWS_SESSION_TOKEN') // optional
+                    string(credentialsId: 'session_token', variable: 'AWS_SESSION_TOKEN')
                 ]) {
-                    sh '''
-                        cd day1
+                    sh """
+                        cd ${TF_WORKING_DIR}
                         terraform init -input=false
-                    '''
+                    """
                 }
             }
         }
@@ -33,11 +33,11 @@ pipeline {
                 withCredentials([
                     string(credentialsId: 'aws_access_key', variable: 'AWS_ACCESS_KEY_ID'),
                     string(credentialsId: 'secret', variable: 'AWS_SECRET_ACCESS_KEY'),
-                    string(credentialsId: 'session_token', variable: 'AWS_SESSION_TOKEN') // optional
+                    string(credentialsId: 'session_token', variable: 'AWS_SESSION_TOKEN')
                 ]) {
                     sh """
-                    cd ${TF_WORKING_DIR}
-                    terraform plan -out=tfplan -input=false
+                        cd ${TF_WORKING_DIR}
+                        terraform plan -out=tfplan -input=false
                     """
                 }
             }
@@ -66,11 +66,11 @@ pipeline {
                 withCredentials([
                     string(credentialsId: 'aws_access_key', variable: 'AWS_ACCESS_KEY_ID'),
                     string(credentialsId: 'secret', variable: 'AWS_SECRET_ACCESS_KEY'),
-                    string(credentialsId: 'session_token', variable: 'AWS_SESSION_TOKEN') // optional
+                    string(credentialsId: 'session_token', variable: 'AWS_SESSION_TOKEN')
                 ]) {
                     sh """
-                    cd ${TF_WORKING_DIR}
-                    terraform apply -input=false tfplan
+                        cd ${TF_WORKING_DIR}
+                        terraform apply -input=false tfplan
                     """
                 }
             }
