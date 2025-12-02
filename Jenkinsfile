@@ -20,10 +20,10 @@ pipeline {
                     string(credentialsId: 'secret', variable: 'AWS_SECRET_ACCESS_KEY'),
                     string(credentialsId: 'session_token', variable: 'AWS_SESSION_TOKEN') // optional
                 ]) {
-                    sh """
-                    cd ${TF_WORKING_DIR}
-                    terraform init -input=false
-                    """
+                    sh '''
+                        cd day1
+                        terraform init -input=false
+                    '''
                 }
             }
         }
