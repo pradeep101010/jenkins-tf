@@ -21,7 +21,6 @@ pipeline {
                     string(credentialsId: 'session_token', variable: 'AWS_SESSION_TOKEN')
                 ]) {
                     sh """
-                        cd ${TF_WORKING_DIR}
                         terraform init -input=false
                     """
                 }
@@ -36,7 +35,6 @@ pipeline {
                     string(credentialsId: 'session_token', variable: 'AWS_SESSION_TOKEN')
                 ]) {
                     sh """
-                        cd ${TF_WORKING_DIR}
                         terraform plan -out=tfplan -input=false
                     """
                 }
@@ -69,7 +67,6 @@ pipeline {
                     string(credentialsId: 'session_token', variable: 'AWS_SESSION_TOKEN')
                 ]) {
                     sh """
-                        cd ${TF_WORKING_DIR}
                         terraform apply -input=false tfplan
                     """
                 }
